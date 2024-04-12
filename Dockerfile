@@ -18,6 +18,8 @@ RUN terraform --version
 # Defina o diretório de trabalho para o diretório do projeto Terraform
 WORKDIR /app
 
+RUN ls
+
 # Copie o projeto Terraform para o diretório de trabalho
 COPY ./my-terraform-project /app
 
