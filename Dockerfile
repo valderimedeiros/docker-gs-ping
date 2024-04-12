@@ -2,25 +2,24 @@
 FROM registry.access.redhat.com/ubi8/ubi:latest
 
 # Instale as dependências necessárias
-RUN yum -y install wget
+RUN yum -y install wget unzip
 
 # Defina o diretório de trabalho
 WORKDIR /usr/local/bin
 
-# Baixe o binário do Hugo
-RUN wget https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_0.88.1_Linux-64bit.tar.gz && \
-    tar -xzf hugo_0.88.1_Linux-64bit.tar.gz && \
-    mv hugo /usr/local/bin/ && \
-    rm -rf hugo_0.88.1_Linux-64bit.tar.gz LICENSE README.md
+# Baixe o binário do Terraform
+RUN wget https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip && \
+    unzip terraform_1.0.8_linux_amd64.zip && \
+    rm terraform_1.0.8_linux_amd64.zip
 
-# Defina o diretório de trabalho para o diretório do site
-WORKDIR /usr/share/nginx/html
+# Verifique a instalação
+RUN terraform --version
 
-# Copie o site para o diretório de trabalho (por exemplo, o site Hugo)
-COPY ./my-site /usr/share/nginx/html
+# Defina o diretório de trabalho para o diretório do projeto Terraform
+WORKDIR /app
 
-# Exponha a porta do site
-EXPOSE 80
+# Copie o projeto Terraform para o diretório de trabalho
+COPY ./my-terraform-project /app
 
-# Gere o site e inicie o servidor Hugo quando o contêiner iniciar
-CMD ["hugo", "server", "--bind=0.0.0.0"]
+# Execute o Terraform init quando o contêiner iniciar
+CMD ["terraform", "init"]
