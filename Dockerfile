@@ -1,26 +1,23 @@
-# syntax=docker/dockerfile:1
+# Use uma imagem base do Red Hat Universal Base Image 8
+FROM registry.access.redhat.com/ubi8/ubi:latest
 
-FROM golang
+# Instale as dependências necessárias
+RUN yum -y install wget
 
-# Set destination for COPY
-WORKDIR /app
+# Defina o diretório de trabalho
+WORKDIR /usr/local/bin
 
-# Download Go modules
-COPY go.mod go.sum ./
-RUN go mod download
+# Baixe o binário do NGINX
+RUN wget https://nginx.org/download/nginx-1.21.1.tar.gz && \
+    tar xvzf nginx-1.21.1.tar.gz && \
+    cd nginx-1.21.1 && \
+    ./configure && \
+    make && \
+    make install && \
+    cd .. && rm -rf nginx-1.21.1*
 
-# Copy the source code. Note the slash at the end, as explained in
-# https://docs.docker.com/engine/reference/builder/#copy
-COPY *.go ./
+# Exponha a porta do NGINX
+EXPOSE 80
 
-# Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
-
-# To bind to a TCP port, runtime parameters must be supplied to the docker command.
-# But we can (optionally) document in the Dockerfile what ports
-# the application is going to listen on by default.
-# https://docs.docker.com/engine/reference/builder/#expose
-EXPOSE 8080
-
-# Run
-CMD [ "/docker-gs-ping" ]
+# Execute o servidor NGINX quando o contêiner iniciar
+CMD ["nginx", "-g", "daemon off;"]
