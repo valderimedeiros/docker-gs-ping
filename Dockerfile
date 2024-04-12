@@ -7,20 +7,20 @@ RUN yum -y install wget
 # Defina o diretório de trabalho
 WORKDIR /usr/local/bin
 
-# Baixe o binário do Node.js
-RUN wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz && \
-    tar -xJf node-v14.17.5-linux-x64.tar.xz && \
-    cp node-v14.17.5-linux-x64/bin/node /usr/local/bin/ && \
-    rm -rf node-v14.17.5-linux-x64*
+# Baixe o binário do Hugo
+RUN wget https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_0.88.1_Linux-64bit.tar.gz && \
+    tar -xzf hugo_0.88.1_Linux-64bit.tar.gz && \
+    mv hugo /usr/local/bin/ && \
+    rm -rf hugo_0.88.1_Linux-64bit.tar.gz LICENSE README.md
 
-# Defina o diretório de trabalho para o diretório do aplicativo
-WORKDIR /app
+# Defina o diretório de trabalho para o diretório do site
+WORKDIR /usr/share/nginx/html
 
-# Copie o aplicativo para o diretório de trabalho (por exemplo, o aplicativo Node.js)
-COPY ./my-app /app
+# Copie o site para o diretório de trabalho (por exemplo, o site Hugo)
+COPY ./my-site /usr/share/nginx/html
 
-# Exponha a porta do aplicativo
-EXPOSE 3000
+# Exponha a porta do site
+EXPOSE 80
 
-# Execute o aplicativo quando o contêiner iniciar
-CMD ["node", "app.js"]
+# Gere o site e inicie o servidor Hugo quando o contêiner iniciar
+CMD ["hugo", "server", "--bind=0.0.0.0"]
