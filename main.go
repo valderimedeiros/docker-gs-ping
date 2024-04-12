@@ -23,7 +23,7 @@ func main() {
 		return c.JSON(http.StatusOK, struct{ Status string }{Status: "OK"})
 	})
 
-	httpPort := os.Getenv("PORT")
+	httpPort := os.Getenv("PORT", 8081)
 	if httpPort == "" {
 		httpPort = "8080"
 	}
