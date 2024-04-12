@@ -7,17 +7,20 @@ RUN yum -y install wget
 # Defina o diretório de trabalho
 WORKDIR /usr/local/bin
 
-# Baixe o binário do NGINX
-RUN wget https://nginx.org/download/nginx-1.21.1.tar.gz && \
-    tar xvzf nginx-1.21.1.tar.gz && \
-    cd nginx-1.21.1 && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && rm -rf nginx-1.21.1*
+# Baixe o binário do Node.js
+RUN wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-x64.tar.xz && \
+    tar -xJf node-v14.17.5-linux-x64.tar.xz && \
+    cp node-v14.17.5-linux-x64/bin/node /usr/local/bin/ && \
+    rm -rf node-v14.17.5-linux-x64*
 
-# Exponha a porta do NGINX
-EXPOSE 80
+# Defina o diretório de trabalho para o diretório do aplicativo
+WORKDIR /app
 
-# Execute o servidor NGINX quando o contêiner iniciar
-CMD ["nginx", "-g", "daemon off;"]
+# Copie o aplicativo para o diretório de trabalho (por exemplo, o aplicativo Node.js)
+COPY ./my-app /app
+
+# Exponha a porta do aplicativo
+EXPOSE 3000
+
+# Execute o aplicativo quando o contêiner iniciar
+CMD ["node", "app.js"]
