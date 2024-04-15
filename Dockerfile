@@ -12,7 +12,7 @@ RUN microdnf install -y curl && \
 WORKDIR /opt/app
 
 # Download the binary file
-RUN curl -L -o app-binary.sh https://github.com/ruanyf/simple-bash-scripts/blob/master/scripts/hello-world.sh
+RUN curl -L -o app-binary.sh https://filesamples.com/samples/code/sh/sample3.sh
 
 # Make the binary executable
 RUN chmod +x app-binary.sh
