@@ -1,5 +1,5 @@
 # Use a imagem ubi8/ubi-minimal como base
-FROM registry.access.redhat.com/ubi8/ubi-standard
+FROM registry.access.redhat.com/ubi8/ubi
 # Instale o netcat
 RUN microdnf install -y nmap-ncat && microdnf clean all
 
