@@ -17,7 +17,7 @@ RUN chgrp -R 0 /app && \
 WORKDIR /app
 
 # Defina o ENTRYPOINT
-ENTRYPOINT ["/app/postal/"]
+ENTRYPOINT ["/app/postal/postal"]
 
 # Defina o CMD 
 CMD ["./postal"]
