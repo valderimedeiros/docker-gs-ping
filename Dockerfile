@@ -4,10 +4,10 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 RUN microdnf install -y nmap-ncat && microdnf clean all
 
 # Adicione o script do servidor para o diretório de trabalho
-ADD postal /app/postal
+ADD postal /app/postal/
 
 # Torna o script executável
-RUN chmod +x /app/postal
+RUN chmod +x /app/postal/postal
 
 # Defina o diretório de trabalho para /app
 WORKDIR /app
