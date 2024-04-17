@@ -1,21 +1,19 @@
-# Use a base image
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+# Use a imagem ubi8/ubi-minimal como base
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+# Instale o netcat
+RUN microdnf install -y nmap-ncat && microdnf clean all
 
-# Set maintainer label
-LABEL maintainer="Your Name <your.email@example.com>"
+# Adicione o script do servidor para o diretório de trabalho
+ADD postal /app/postal
 
-# Install necessary packages
-RUN microdnf install -y curl && \
-    microdnf clean all
+# Torna o script executável
+RUN chmod +x /app/postal
 
-# Set the working directory
-WORKDIR /opt/app
+# Defina o diretório de trabalho para /app
+WORKDIR /app
 
-# Download the binary file
-RUN curl -L -o app-binary.sh https://filesamples.com/samples/code/sh/sample3.sh
+# Defina o ENTRYPOINT
+ENTRYPOINT ["/app/postal"]
 
-# Make the binary executable
-RUN chmod +x app-binary.sh
-
-# Set the default command to execute the binary
-CMD ["./app-binary.sh"]
+# Defina o CMD 
+CMD ["./postal"]
