@@ -6,7 +6,7 @@ RUN microdnf install -y nmap-ncat && microdnf clean all
 RUN mkdir -p /app
 
 # Adicione o script do servidor para o diretório de trabalho
-ADD postal /app/postal
+COPY postal /app/postal
 
 # Torna o script executável 
 RUN chmod +x /app/postal
