@@ -7,13 +7,14 @@ RUN microdnf install -y nmap-ncat && microdnf clean all
 ADD postal /app/postal/
 
 # Torna o script executável 
-RUN chmod +x /app/postal
+RUN chgrp -R 0 /app && \
+  chmod -R g=u /app
 
 # Defina o diretório de trabalho para /app
 WORKDIR /app
 
 # Defina o ENTRYPOINT
-ENTRYPOINT ["/app/postal/postal"]
+ENTRYPOINT ["/app/postal"]
 
 # Defina o CMD 
 CMD ["./postal"]
