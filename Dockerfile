@@ -3,10 +3,8 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 # Instale o netcat
 RUN microdnf install -y nmap-ncat && microdnf clean all
 
-RUN mkdir -p /app
-
 # Adicione o script do servidor para o diretório de trabalho
-COPY postal /app/postal
+ADD postal /app/postal/
 
 # Torna o script executável 
 RUN chmod +x /app/postal
