@@ -20,4 +20,4 @@ WORKDIR /app
 #ENTRYPOINT ["/app/postal/postal"]
 
 # Defina o CMD 
-CMD ["./postal/postal"]
+CMD ["bash", "/app/postal/postal"]
