@@ -6,9 +6,12 @@ RUN microdnf install -y nmap-ncat && microdnf clean all
 # Adicione o script do servidor para o diretório de trabalho
 ADD postal /app/postal/
 
+USER root
 # Torna o script executável 
-RUN chgrp -R 0 /app && \
-  chmod -R g=u /app
+RUN chgrp -R 0 /app/postal && \
+  chmod -R g=u /app/postal
+
+USER 1000700000
 
 # Defina o diretório de trabalho para /app
 WORKDIR /app
