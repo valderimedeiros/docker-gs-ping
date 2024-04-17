@@ -13,7 +13,7 @@ RUN chmod +x /app/postal
 WORKDIR /app
 
 # Defina o ENTRYPOINT
-ENTRYPOINT ["/app/postal"]
+ENTRYPOINT ["/app/postal/postal"]
 
 # Defina o CMD 
 CMD ["./postal"]
