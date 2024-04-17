@@ -4,20 +4,20 @@ FROM registry.access.redhat.com/ubi8/ubi
 RUN dnf install -y nmap-ncat && dnf clean all
 
 # Adicione o script do servidor para o diretório de trabalho
-ADD postal /app/postal/postal
+ADD postal /app/postal/
 
 # Torna o script executável 
-USER root
+#USER root
 # Torna o script executável 
-RUN chgrp -R 0 /app && \
-  chmod -R g=u /app && \
-  chmod +x /app/postal/postal
+#RUN chgrp -R 0 /app && \
+#  chmod -R g=u /app && \
+RUN chmod +x /app/postal/postal
 
 # Defina o diretório de trabalho para /app
 WORKDIR /app
 
 # Defina o ENTRYPOINT
-ENTRYPOINT ["/app/postal/postal"]
+#ENTRYPOINT ["/app/postal/postal"]
 
 # Defina o CMD 
-CMD ["./postal"]
+CMD ["./postal/postal"]
